@@ -6,8 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/index.js",
-    "dev": "nodemon src/index.js"
+    "start": "node --experimental-specifier-resolution=node src/index.js",
+    "dev": "nodemon --experimental-specifier-resolution=node src/index.js"
   },
   "author": "Atishay-J",
   "license": "ISC",
