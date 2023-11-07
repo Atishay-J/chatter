@@ -23,7 +23,14 @@ io.on('connection', (socket) => {
   console.log('a user connected');
   socket.on('join room', (userName, roomName, role) => {
     console.log('user joining room');
-    server_history = joinRoom(server_history, socket, roomName, role, userName);
+    server_history = joinRoom(
+      server_history,
+      socket,
+      io,
+      roomName,
+      role,
+      userName
+    );
   });
   socket.on('disconnect', () => {
     console.log('user disconnected');
@@ -33,6 +40,7 @@ io.on('connection', (socket) => {
     server_history = postMessage(
       server_history,
       socket,
+      io,
       msgObj,
       userName,
       roomName

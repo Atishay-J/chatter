@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import { io } from 'socket.io-client';
-import { useSocketContext } from './components/SocketContext';
+import { useSocketContext } from './components/contexts/SocketContext';
 import CreateRoomPage from './components/CreateRoomPage';
 
 function App() {

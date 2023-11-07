@@ -3,13 +3,29 @@ import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
 import './index.css';
 import { ChakraProvider } from '@chakra-ui/react';
-import { SocketContextProvider } from './components/SocketContext/index.tsx';
+import { SocketContextProvider } from './components/contexts/SocketContext/index.tsx';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import RoomPage from './components/RoomPage/index.tsx';
+import { RoomContextProvider } from './components/contexts/RoomContext/index.tsx';
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <App />
+  },
+  {
+    path: '/room/:roomName',
+    element: <RoomPage />
+  }
+]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ChakraProvider>
       <SocketContextProvider>
-        <App />
+        <RoomContextProvider>
+          <RouterProvider router={router} />
+        </RoomContextProvider>
       </SocketContextProvider>
     </ChakraProvider>
   </React.StrictMode>
