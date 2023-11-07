@@ -1,8 +1,8 @@
 import express from 'express';
 import { createServer } from 'node:http';
 import { Server } from 'socket.io';
-import { addUserToRoom } from './utils';
 import { joinRoom } from './users';
+import { postMessage } from './chat';
 
 const app = express();
 const server = createServer(app);
@@ -18,14 +18,20 @@ let server_history = {};
 io.on('connection', (socket) => {
   console.log('a user connected');
   socket.on('join room', (userName, roomName, role) => {
-    server_history = joinRoom(server_history, roomName, role, userName, socket);
+    server_history = joinRoom(server_history, socket, roomName, role, userName);
   });
   socket.on('disconnect', () => {
     console.log('user disconnected');
   });
-  socket.on('chat message', (msg) => {
-    console.log('message: ' + msg);
-    server_history.push(msg);
+  socket.on('chat message', (userName, roomName, msgObj) => {
+    console.log('message: ' + msgObj);
+    server_history = postMessage(
+      server_history,
+      socket,
+      msgObj,
+      userName,
+      roomName
+    );
   });
 });
 

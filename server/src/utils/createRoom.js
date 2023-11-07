@@ -4,8 +4,11 @@
  * @param {string} roomName
  */
 
-const createRoom = (roomName) => {
-  return { [roomName]: {} };
+const createRoom = (roomName, userData, serverRoomData) => {
+  const oldParticipants = serverRoomData.participants || [];
+  const participants = [...oldParticipants, userData];
+  const oldRoomData = serverRoomData || {};
+  return { [roomName]: { ...oldRoomData, participants } };
 };
 
 export default createRoom;

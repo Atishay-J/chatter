@@ -11,14 +11,8 @@ import { createUser, createRoom } from './index';
 
 const addUserToRoom = (roomName, userName, role, serverRoomData) => {
   const userData = createUser(userName, role);
-  const roomData = createRoom(roomName);
-  const oldParticipants = serverRoomData.participants || [];
-  return {
-    ...roomData,
-    [roomName]: {
-      participants: [...oldParticipants, userData]
-    }
-  };
+  const roomData = createRoom(roomName, userData, serverRoomData);
+  return roomData;
 };
 
 export default addUserToRoom;
