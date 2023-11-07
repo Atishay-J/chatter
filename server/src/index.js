@@ -3,10 +3,14 @@ import { createServer } from 'node:http';
 import { Server } from 'socket.io';
 import { joinRoom } from './users';
 import { postMessage } from './chat';
+import cors from 'cors';
 
 const app = express();
+app.use(cors());
 const server = createServer(app);
-const io = new Server(server);
+const io = new Server(server, {
+  cors: '*'
+});
 const PORT = process.env.PORT || 8080;
 
 app.get('/', (req, res) => {
@@ -18,6 +22,7 @@ let server_history = {};
 io.on('connection', (socket) => {
   console.log('a user connected');
   socket.on('join room', (userName, roomName, role) => {
+    console.log('user joining room');
     server_history = joinRoom(server_history, socket, roomName, role, userName);
   });
   socket.on('disconnect', () => {

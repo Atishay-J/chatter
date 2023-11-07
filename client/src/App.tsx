@@ -1,35 +1,52 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from 'react';
+import './App.css';
+import { io } from 'socket.io-client';
+
+const isDevEnv = import.meta.env.DEV;
+
+const socket = io(isDevEnv ? 'http://localhost:8080' : '');
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [input, setInput] = useState('');
+  const [roomName, setRoomName] = useState('');
+
+  const sendMsg = () => {
+    socket.emit('chat message', 'sdfdsf', roomName, { msg: input });
+  };
+
+  const joinRoom = () => {
+    console.log('should join room', socket);
+    socket.emit('join room', 'sdfdsf', roomName, 'DEN');
+  };
+
+  useEffect(() => {
+    socket.on('new message', (...args) => console.log('New Message', args));
+    socket.on('user joined', (...args) => console.log('user joined', args));
+  }, []);
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <h1>App</h1>
+      <input
+        type="text"
+        name="room"
+        id="room"
+        value={roomName}
+        onChange={(e) => setRoomName(e.target.value)}
+      />
+      <input
+        type="text"
+        name="chat"
+        id="chat"
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+      />
+
+      <button onClick={joinRoom}>Join Room</button>
+      <button onClick={sendMsg}>Send Msg</button>
+      <button></button>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
