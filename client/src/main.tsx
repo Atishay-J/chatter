@@ -7,6 +7,7 @@ import { SocketContextProvider } from './components/contexts/SocketContext/index
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import RoomPage from './components/RoomPage/index.tsx';
 import { RoomContextProvider } from './components/contexts/RoomContext/index.tsx';
+import JoinRoomPage from './components/JoinRoomPage/index.tsx';
 
 const router = createBrowserRouter([
   {
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
   {
     path: '/room/:roomName',
     element: <RoomPage />
+  },
+  {
+    path: '/join/room/:roomName',
+    element: <JoinRoomPage />
   }
 ]);
 

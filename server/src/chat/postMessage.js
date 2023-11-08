@@ -5,22 +5,25 @@ const postMessage = (
   socket,
   io,
   msgObj,
+  userId,
   userName,
-  roomName
+  roomId
 ) => {
+  //TODO: Add ids inplace of names
   const isValidMsg = validateMsg(msgObj?.msg || '');
   if (!isValidMsg) {
-    return io.in(roomName).to(userName).emit('invalid Msg');
+    return io.in(roomId).to(userName).emit('invalid Msg');
   }
-  io.in(roomName).emit('new message', { ...msgObj, userName });
-  const room_history = server_history?.[roomName] || {};
+  io.in(roomId).emit('new message', { ...msgObj, userName, userId });
+  const room_history = server_history?.[roomId] || {};
   const updatedRoomHistory = addMsgToRoomHistory(
     room_history,
     msgObj,
-    userName
+    userName,
+    userId
   );
 
-  return { ...server_history, [roomName]: updatedRoomHistory };
+  return { ...server_history, [roomId]: updatedRoomHistory };
 };
 
 export default postMessage;

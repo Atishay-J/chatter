@@ -1,3 +1,4 @@
+import { nanoid } from 'nanoid';
 /**
  *
  * @param {string} serverHistory
@@ -7,7 +8,8 @@
  */
 
 const createUser = (name, role) => {
-  return { name, role };
+  const userId = nanoid();
+  return { name, role, userId };
 };
 
 export default createUser;

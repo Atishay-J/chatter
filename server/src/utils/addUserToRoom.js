@@ -12,7 +12,8 @@ import { createUser, createRoom } from './index';
 const addUserToRoom = (roomName, userName, role, serverRoomData) => {
   const userData = createUser(userName, role);
   const roomData = createRoom(roomName, userData, serverRoomData);
-  return roomData;
+  const roomId = Object.keys(roomData)[0];
+  return { roomData, userId: userData.userId, roomId };
 };
 
 export default addUserToRoom;

@@ -9,7 +9,12 @@ export default function ChatInputPanel() {
   const { roomName, userInfo } = useRoomAndUserInfo();
   const sendMessage = () => {
     if (roomName) {
-      socketServer.sendMessage(userInfo.userName, roomName, chat);
+      socketServer.sendMessage(
+        userInfo.userId,
+        userInfo.userName,
+        roomName,
+        chat
+      );
       setChat('');
     }
   };

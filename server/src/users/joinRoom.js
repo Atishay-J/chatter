@@ -11,13 +11,19 @@ import { addUserToRoom } from '../utils';
  */
 
 const joinRoom = (server_history, socket, io, roomName, role, name) => {
-  socket.join(roomName);
   const oldRoomData = server_history[roomName] || {};
-  const userInRoom = addUserToRoom(roomName, name, role, oldRoomData);
-  const updatedHistory = { ...server_history, ...userInRoom };
+  const { roomData, userId, roomId } = addUserToRoom(
+    roomName,
+    name,
+    role,
+    oldRoomData
+  );
+  console.log('user in room', roomData, userId, roomId);
+  socket.join(roomId);
+  const updatedHistory = { ...server_history, ...roomData };
   socket.emit('user joined', updatedHistory);
-  io.in(roomName).to(name).emit('room data', userInRoom);
-  return updatedHistory;
+  io.in(roomId).to(userId).emit('room data', roomData);
+  return { updatedHistory, userId, roomId };
 };
 
 export default joinRoom;

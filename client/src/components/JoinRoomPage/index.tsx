@@ -2,24 +2,26 @@ import { Button, Center, Input, VStack } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { useSocketContext } from '../contexts/SocketContext';
 import { useNavigate } from 'react-router-dom';
+import useRoomAndUserInfo from '../hooks/useRoomAndUserInfo';
 
-export default function CreateRoomPage() {
+export default function JoinRoomPage() {
   const [userName, setUserName] = useState('');
-  const [roomName, setRoomName] = useState('');
   const { socket, socketServer } = useSocketContext();
   const navigate = useNavigate();
+  const { roomName } = useRoomAndUserInfo();
 
   const joinRoom = async () => {
     console.log('should join room', socket);
-    const joinRoomResponse = await socketServer.joinRoom(userName, roomName);
-    if (joinRoomResponse) {
-      const { roomId, userId } = joinRoomResponse;
-      navigate(`/room/${roomId}`, {
-        state: { userInfo: { userName, userId } }
-      });
+    if (roomName) {
+      const joinRoomResponse = await socketServer.joinRoom(userName, roomName);
+      if (joinRoomResponse) {
+        const { roomId, userId } = joinRoomResponse;
+        navigate(`/room/${roomId}`, {
+          state: { userInfo: { userName, userId } }
+        });
+      }
     }
   };
-
   return (
     <Center h="100vh">
       <VStack
@@ -31,13 +33,6 @@ export default function CreateRoomPage() {
         borderRadius="18px"
       >
         <VStack w="100%" spacing="1rem">
-          <Input
-            type="text"
-            name="room_name"
-            onChange={(e) => setRoomName(e.target.value)}
-            value={roomName}
-            placeholder="Enter Room Name"
-          />
           <Input
             type="text"
             name="user_name"

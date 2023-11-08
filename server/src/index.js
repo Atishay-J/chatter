@@ -21,9 +21,9 @@ let server_history = {};
 
 io.on('connection', (socket) => {
   console.log('a user connected');
-  socket.on('join room', (userName, roomName, role) => {
+  socket.on('join room', (userName, roomName, role, callback) => {
     console.log('user joining room');
-    server_history = joinRoom(
+    const { updatedHistory, userId, roomId } = joinRoom(
       server_history,
       socket,
       io,
@@ -31,21 +31,30 @@ io.on('connection', (socket) => {
       role,
       userName
     );
+    server_history = updatedHistory;
+    callback({
+      data: {
+        userId,
+        roomId
+      }
+    });
   });
   socket.on('disconnect', () => {
     console.log('user disconnected');
   });
-  socket.on('chat message', (userName, roomName, msgObj) => {
+  socket.on('chat message', (userId, userName, roomId, msgObj) => {
     console.log('message: ' + msgObj);
     server_history = postMessage(
       server_history,
       socket,
       io,
       msgObj,
+      userId,
       userName,
-      roomName
+      roomId
     );
   });
+  socket.on('block user', (userId, blockedUserId, roomId) => {});
 });
 
 server.listen(PORT, () => {

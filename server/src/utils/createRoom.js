@@ -1,3 +1,4 @@
+import { nanoid } from 'nanoid';
 /**
  * create a room
  * @param {string} serverHistory
@@ -5,10 +6,12 @@
  */
 
 const createRoom = (roomName, userData, serverRoomData) => {
+  const isRoomCreated = Object.keys(serverRoomData).length > 0;
+  const roomId = isRoomCreated ? roomName : nanoid();
   const oldParticipants = serverRoomData.participants || [];
   const participants = [...oldParticipants, userData];
   const oldRoomData = serverRoomData || {};
-  return { [roomName]: { ...oldRoomData, participants } };
+  return { [roomId]: { ...oldRoomData, participants, roomName } };
 };
 
 export default createRoom;
