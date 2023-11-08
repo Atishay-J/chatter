@@ -11,6 +11,7 @@ export interface UserData {
   userName: string;
   userId: string;
   role: UserRole;
+  blockList?: string[];
 }
 
 export interface RoomData {

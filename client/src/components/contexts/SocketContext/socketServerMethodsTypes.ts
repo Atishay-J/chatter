@@ -14,4 +14,5 @@ export type SocketMethods = {
     roomId: string,
     message: string
   ) => void;
+  blockUser: (userId: string, blockedUserId: string, roomId: string) => void;
 };

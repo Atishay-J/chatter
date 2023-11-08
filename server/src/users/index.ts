@@ -1,2 +1,3 @@
 import joinRoom from './joinRoom';
-export { joinRoom };
+import { blockUser } from './blockUser';
+export { joinRoom, blockUser };

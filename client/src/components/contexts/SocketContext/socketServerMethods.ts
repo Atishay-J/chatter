@@ -33,6 +33,9 @@ export const createSocketMethods = (socket: Socket): SocketMethods => {
         timeStamp: new Date()
       };
       socket.emit('chat message', userId, userName, roomId, msgObject);
+    },
+    blockUser: (userId: string, blockedUserId: string, roomName: string) => {
+      socket.emit('block user', userId, 'xxlGjHi-O7XY5u5nnOKvn', roomName);
     }
   };
 };

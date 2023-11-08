@@ -1,7 +1,7 @@
 import express from 'express';
 import { createServer } from 'node:http';
 import { Server } from 'socket.io';
-import { joinRoom } from './users';
+import { joinRoom, blockUser } from './users';
 import { postMessage } from './chat';
 import cors from 'cors';
 import { ChatMessageWithIds, UserRole } from './utils/global.types';
@@ -69,7 +69,9 @@ io.on('connection', (socket) => {
   );
   socket.on(
     'block user',
-    (userId: string, blockedUserId: string, roomId: string) => {}
+    (userId: string, blockedUserId: string, roomId: string) => {
+      server_history = blockUser(userId, blockedUserId, roomId, server_history);
+    }
   );
 });
 

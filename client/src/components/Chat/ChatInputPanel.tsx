@@ -7,6 +7,10 @@ export default function ChatInputPanel() {
   const [chat, setChat] = useState('');
   const { socketServer } = useSocketContext();
   const { roomName, userInfo } = useRoomAndUserInfo();
+  const blockUser = () => {
+    socketServer.blockUser(userInfo.userId, 'test', roomName);
+  };
+
   const sendMessage = () => {
     if (roomName) {
       socketServer.sendMessage(
@@ -27,6 +31,7 @@ export default function ChatInputPanel() {
         onChange={(e) => setChat(e.target.value)}
       />
       <Button onClick={sendMessage}>Send</Button>
+      <Button onClick={blockUser}>Block</Button>
     </HStack>
   );
 }
