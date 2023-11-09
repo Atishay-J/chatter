@@ -1,16 +1,16 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useRoomContext } from '../contexts/RoomContext';
 import { ServerMessageType } from '../types';
 import { useSocketContext } from '../contexts/SocketContext';
-import { VStack } from '@chakra-ui/react';
+import { Text, VStack } from '@chakra-ui/react';
 import { useUserContext } from '../contexts/UserContext';
+import ChatMessage from './ChatMessage';
 
-export default function ChatFeed() {
+export default function ChatFeed({ roomName, roomData }) {
   const [roomMessages, setRoomMessages] = useState<ServerMessageType[]>([]);
-  const serverRoomData = useRoomContext();
+
   const { socket } = useSocketContext();
-  const roomName = Object.keys(serverRoomData)[0] || '';
-  const roomData = Object.values(serverRoomData)[0] || {};
+
   const oldMessages: ServerMessageType[] | [] =
     'messages' in roomData ? roomData?.messages : [];
   const totalOldMsgCount = oldMessages.length;
@@ -18,6 +18,7 @@ export default function ChatFeed() {
   const [filteredMessages, setFilteredMessages] = useState<ServerMessageType[]>(
     []
   );
+  const vStackRef = useRef<HTMLDivElement>(null);
 
   console.log('ROom data here', {
     roomData,
@@ -25,6 +26,12 @@ export default function ChatFeed() {
     roomMessages,
     filteredMessages
   });
+
+  const scrollToBottom = () => {
+    if (vStackRef.current) {
+      vStackRef.current.scrollTop = vStackRef.current.scrollHeight;
+    }
+  };
 
   const filterAndSetMessages = (
     messages: ServerMessageType[],
@@ -57,15 +64,25 @@ export default function ChatFeed() {
   useEffect(() => {
     filterAndSetMessages(roomMessages, setFilteredMessages);
   }, [blockList, roomMessages]);
+
+  useEffect(() => {
+    vStackRef.current?.lastElementChild?.scrollIntoView();
+  }, [filteredMessages]);
+
   console.log({ roomData, roomMessages });
   return (
-    <VStack>
-      <h1>Room Feed {roomName}</h1>
-      <VStack>
-        {filteredMessages?.map((message, idx) => (
-          <h1 key={idx}>{message.msg}</h1>
-        ))}
-      </VStack>
+    <VStack
+      ref={vStackRef}
+      overflow="auto"
+      w="100%"
+      h="90%"
+      maxH="89%"
+      align="start"
+      spacing="1.3rem"
+    >
+      {filteredMessages?.map((message, idx) => (
+        <ChatMessage key={idx} message={message} />
+      ))}
     </VStack>
   );
 }

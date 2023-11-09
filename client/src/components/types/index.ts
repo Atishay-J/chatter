@@ -6,7 +6,7 @@ export interface ServerMessageType {
 }
 
 export interface ServerRoomParticipantType {
-  name: string;
+  userName: string;
   role: string;
   userId: string;
   blockList?: string[];
@@ -15,5 +15,6 @@ export interface ServerRoomParticipantType {
 export interface ServerRoomType {
   messages: ServerMessageType[];
   participants: ServerRoomParticipantType[];
+  roomName: string;
   [key: string]: unknown;
 }

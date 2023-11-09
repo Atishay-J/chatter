@@ -1,2 +1,3 @@
 import ChatFeed from './ChatFeed';
-export { ChatFeed };
+import ChatScreen from './ChatScreen';
+export { ChatFeed, ChatScreen };

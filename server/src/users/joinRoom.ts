@@ -21,7 +21,7 @@ const joinRoom = (
   role: UserRole,
   userName: string
 ) => {
-  const oldRoomData = server_history[roomName] || {};
+  const oldRoomData = server_history?.[roomName] || {};
   const { roomData, userId, roomId } = addUserToRoom(
     roomName,
     userName,

@@ -11,8 +11,8 @@ const postMessage = (
   userName: string,
   roomId: string
 ) => {
-  const currentRoom = server_history[roomId];
-  const currentUser = currentRoom?.participants.find(
+  const currentRoom = server_history?.[roomId];
+  const currentUser = currentRoom?.participants?.find(
     (user) => user.userId === userId
   );
   const blackListedUsers = currentUser?.blockList;
