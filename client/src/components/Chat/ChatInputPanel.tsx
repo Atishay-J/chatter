@@ -1,9 +1,10 @@
-import { Button, HStack, Input, Textarea } from '@chakra-ui/react';
+import { Button, HStack, IconButton, Input, Textarea } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { useSocketContext } from '../contexts/SocketContext';
 import useRoomAndUserInfo from '../hooks/useRoomAndUserInfo';
 import { useUserContext } from '../contexts/UserContext';
 import ResizeTextarea from 'react-textarea-autosize';
+import { LuSend } from 'react-icons/lu';
 
 export default function ChatInputPanel() {
   const [chat, setChat] = useState('');
@@ -49,10 +50,20 @@ export default function ChatInputPanel() {
         p="1rem"
         as={ResizeTextarea}
       />
-      <Button onClick={sendMessage} background="#2c39df" color="white">
-        Send
-      </Button>
-      <Button onClick={() => blockUser('-Vegdq7yjFvVqiK8C3nDE')}>Block</Button>
+      <IconButton
+        onClick={sendMessage}
+        aria-label="Send Message"
+        background="#2c39df"
+        // variant="ghost"
+        color="white"
+        fontSize="1.3rem"
+        margin="0"
+        icon={<LuSend />}
+        size="md"
+        mr="0.4rem"
+        // borderRadius="0px 24px 24px 0px"
+      />
+      {/* <Button onClick={() => blockUser('-Vegdq7yjFvVqiK8C3nDE')}>Block</Button> */}
     </HStack>
   );
 }
