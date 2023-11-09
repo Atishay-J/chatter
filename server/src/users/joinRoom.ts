@@ -21,12 +21,11 @@ const joinRoom = (
   role: UserRole,
   userName: string
 ) => {
-  const oldRoomData = server_history?.[roomName] || {};
   const { roomData, userId, roomId } = addUserToRoom(
     roomName,
     userName,
     role,
-    oldRoomData
+    server_history
   );
   console.log('user in room', roomData, userId, roomId);
   socket.join(roomId);

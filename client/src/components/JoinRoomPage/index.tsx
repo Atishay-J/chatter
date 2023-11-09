@@ -16,6 +16,11 @@ export default function JoinRoomPage() {
       const joinRoomResponse = await socketServer.joinRoom(userName, roomName);
       if (joinRoomResponse) {
         const { roomId, userId } = joinRoomResponse;
+        const userInfo = { userName, userId, roomId };
+        const stringifiedUserInfo = JSON.stringify(userInfo);
+        console.log({ stringifiedUserInfo });
+        localStorage.setItem('userInfo', stringifiedUserInfo);
+
         navigate(`/room/${roomId}`, {
           state: { userInfo: { userName, userId } }
         });

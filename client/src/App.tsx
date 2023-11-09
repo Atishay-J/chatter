@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import { useSocketContext } from './components/contexts/SocketContext';
 import CreateRoomPage from './components/CreateRoomPage';
-import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import RoomPage from './components/RoomPage';
 import JoinRoomPage from './components/JoinRoomPage';
 
 function App() {
-  const { socket } = useSocketContext();
+  const { socket, socketServer } = useSocketContext();
 
   useEffect(() => {
     socket.on('new message', (...args) => console.log('New Message', args));
@@ -17,7 +17,7 @@ function App() {
     <Routes>
       <Route path="/" element={<CreateRoomPage />} />
       <Route path="/room/:roomName" element={<RoomPage />} />
-      <Route path="/join/room/:roomName" element={<JoinRoomPage />} />
+      <Route path="/join/:roomName" element={<JoinRoomPage />} />
     </Routes>
   );
 }

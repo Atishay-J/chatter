@@ -20,8 +20,8 @@ export default function ChatScreen({ roomData, roomName }: ChatScreenType) {
       boxShadow="0px 0px 10px -2px rgba(200,200,200,0.3)"
       overflow="hidden"
     >
-      <Text h="6%" lineHeight="3.2rem">
-        Room Feed {roomName}
+      <Text h="6%" lineHeight="3.2rem" fontWeight="700" color="#122036">
+        Room - {roomName}
       </Text>
       <VStack w="100%" h="94%" background="#f1f3fa" p="1rem">
         <ChatFeed roomData={roomData} roomName={roomName} />

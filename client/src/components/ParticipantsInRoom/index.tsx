@@ -1,7 +1,12 @@
 import { VStack } from '@chakra-ui/react';
 import ParticipantsStatusCard from './ParticipantsStatusCard';
+import { ServerRoomType } from '../types';
 
-export default function ParticipantsInRoom({ roomData }) {
+export default function ParticipantsInRoom({
+  roomData
+}: {
+  roomData: ServerRoomType;
+}) {
   const participants = roomData.participants;
   console.log('Participant', participants);
   return (
@@ -18,6 +23,7 @@ export default function ParticipantsInRoom({ roomData }) {
         <ParticipantsStatusCard
           key={participant.userId}
           name={participant.userName}
+          userId={participant.userId}
           status={'online'}
           role={participant.role}
         />

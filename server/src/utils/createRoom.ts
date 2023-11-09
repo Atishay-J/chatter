@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid';
-import { RoomData, UserData } from './global.types';
+import { RoomData, ServerHistory, UserData } from './global.types';
 /**
  * create a room
  * @param {string} serverHistory
@@ -9,14 +9,18 @@ import { RoomData, UserData } from './global.types';
 const createRoom = (
   roomName: string,
   userData: UserData,
-  serverRoomData: RoomData
+  serverRoomData: ServerHistory
 ) => {
-  const isRoomCreated = Object.keys(serverRoomData).length > 0;
-  const roomId = isRoomCreated ? roomName : nanoid();
-  const oldParticipants = serverRoomData.participants || [];
+  const oldRoomData = serverRoomData?.[roomName] || {};
+  const roomNameToUse = oldRoomData?.roomName ?? roomName;
+  const oldRoomId = Object.keys(serverRoomData || {})?.[0];
+  const isRoomCreated = oldRoomId?.length > 0;
+  const roomId = isRoomCreated ? oldRoomId : nanoid();
+  const oldParticipants = oldRoomData.participants || [];
   const participants = [...oldParticipants, userData];
-  const oldRoomData = serverRoomData || {};
-  return { [roomId]: { ...oldRoomData, participants, roomName } };
+  return {
+    [roomId]: { ...oldRoomData, participants, roomName: roomNameToUse }
+  };
 };
 
 export default createRoom;

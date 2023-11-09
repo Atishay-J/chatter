@@ -31,7 +31,6 @@ export default function ChatFeed({ roomName, roomData }) {
   const showProfaneToast = () => {
     toast({
       title: 'Please remove any profanity and try again.',
-      //   description: "We've created your account for you.",
       status: 'error',
       duration: 5000,
       isClosable: true,
@@ -56,6 +55,7 @@ export default function ChatFeed({ roomName, roomData }) {
 
   useEffect(() => {
     const handleNewMessage = (...args: ServerMessageType[]) => {
+      console.log('New message recieved', args);
       setRoomMessages((prev) => {
         return [...prev, ...args];
       });

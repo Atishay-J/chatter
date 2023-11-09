@@ -23,29 +23,28 @@ const postMessage = (
     return io.in(roomId).to(userId).emit('invalid Msg');
   }
 
-  const socketsInRoom = io.sockets.adapter.rooms.get(roomId);
-  if (socketsInRoom) {
-    socketsInRoom.forEach((socketId) => {
-      const socket = io.sockets.sockets.get(socketId);
-      if (socket) {
-        // if (!blackListedUsers.includes(socket.userId)) {
-        //   io.to('roomName').to(socketId).emit('message', 'Hello, everyone except some users in the room!');
-        // }
-      }
-    });
+  // const socketsInRoom = io.sockets.adapter.rooms.get(roomId);
+  // if (socketsInRoom) {
+  //   socketsInRoom.forEach((socketId) => {
+  //     const socket = io.sockets.sockets.get(socketId);
+  //     if (socket) {
+  //       // if (!blackListedUsers.includes(socket.userId)) {
+  //       //   io.to('roomName').to(socketId).emit('message', 'Hello, everyone except some users in the room!');
+  //       // }
+  //     }
+  //   });
 
-    io.in(roomId).emit('new message', { ...msgObj, userName, userId });
+  io.in(roomId).emit('new message', { ...msgObj, userName, userId });
 
-    const room_history = server_history?.[roomId] || {};
-    const updatedRoomHistory = addMsgToRoomHistory(
-      room_history,
-      msgObj,
-      userName,
-      userId
-    );
+  const room_history = server_history?.[roomId] || {};
+  const updatedRoomHistory = addMsgToRoomHistory(
+    room_history,
+    msgObj,
+    userName,
+    userId
+  );
 
-    return { ...server_history, [roomId]: updatedRoomHistory };
-  }
+  return { ...server_history, [roomId]: updatedRoomHistory };
 };
 
 export default postMessage;

@@ -3,6 +3,7 @@ import {
   JoinRoomResponseType,
   SocketMethods
 } from './socketServerMethodsTypes';
+import { ServerRoomType } from '../../types';
 
 export const createSocketMethods = (socket: Socket): SocketMethods => {
   return {
@@ -36,6 +37,19 @@ export const createSocketMethods = (socket: Socket): SocketMethods => {
     },
     blockUser: (userId: string, blockedUserId: string, roomName: string) => {
       socket.emit('block user', userId, blockedUserId, roomName);
+    },
+    getRoomData: async (roomId: string) => {
+      try {
+        const response: Record<string, ServerRoomType> =
+          await socket.emitWithAck('get room data', roomId);
+        console.log({ roomDataResponse: response });
+        return response;
+      } catch (err) {
+        console.log('Error getting room data');
+      }
+    },
+    rejoinRooms: (roomIds: string[]) => {
+      socket.emit('rejoin rooms', roomIds);
     }
   };
 };

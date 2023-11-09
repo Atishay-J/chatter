@@ -4,7 +4,11 @@ import { Server } from 'socket.io';
 import { joinRoom, blockUser } from './users';
 import { postMessage } from './chat';
 import cors from 'cors';
-import { ChatMessageWithIds, UserRole } from './utils/global.types';
+import {
+  ChatMessageWithIds,
+  ServerHistory,
+  UserRole
+} from './utils/global.types';
 
 const app = express();
 app.use(cors());
@@ -67,6 +71,19 @@ io.on('connection', (socket) => {
       );
     }
   );
+  socket.on('rejoin rooms', (roomIds: string[]) => {
+    roomIds.forEach((roomId) => {
+      socket.join(roomId); // Rejoin the rooms
+    });
+  });
+  socket.on('get room data', (roomId: string, callback) => {
+    const roomData = (server_history as ServerHistory)?.[roomId] || {};
+    if (roomData.roomName) {
+      callback({ [roomId]: roomData });
+    } else {
+      callback({});
+    }
+  });
   socket.on(
     'block user',
     (userId: string, blockedUserId: string, roomId: string) => {

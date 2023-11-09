@@ -1,23 +1,21 @@
-import { Button, HStack, IconButton, Input, Textarea } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import { HStack, IconButton, Textarea } from '@chakra-ui/react';
+import { useState } from 'react';
 import { useSocketContext } from '../contexts/SocketContext';
 import useRoomAndUserInfo from '../hooks/useRoomAndUserInfo';
-import { useUserContext } from '../contexts/UserContext';
 import ResizeTextarea from 'react-textarea-autosize';
 import { LuSend } from 'react-icons/lu';
 
 export default function ChatInputPanel() {
   const [chat, setChat] = useState('');
   const { socketServer } = useSocketContext();
-  const { roomName, userInfo } = useRoomAndUserInfo();
-  const { blockUser } = useUserContext();
+  const { userInfo } = useRoomAndUserInfo();
 
   const sendMessage = () => {
-    if (roomName) {
+    if (userInfo.roomId) {
       socketServer.sendMessage(
         userInfo.userId,
         userInfo.userName,
-        roomName,
+        userInfo.roomId,
         chat
       );
       setChat('');

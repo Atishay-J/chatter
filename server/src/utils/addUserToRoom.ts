@@ -1,5 +1,5 @@
 import { AddUserToRoomParams } from '../users/user.types';
-import { RoomData, UserRole } from './global.types';
+import { RoomData, ServerHistory, UserRole } from './global.types';
 import { createUser, createRoom } from './index';
 
 /**
@@ -15,7 +15,7 @@ const addUserToRoom = (
   roomName: string,
   userName: string,
   role: UserRole,
-  serverRoomData: RoomData
+  serverRoomData: ServerHistory
 ) => {
   const userData = createUser(userName, role);
   const roomData = createRoom(roomName, userData, serverRoomData);
