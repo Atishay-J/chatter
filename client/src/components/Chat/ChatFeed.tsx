@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useRoomContext } from '../contexts/RoomContext';
 import { ServerMessageType } from '../types';
 import { useSocketContext } from '../contexts/SocketContext';
-import { Text, VStack } from '@chakra-ui/react';
+import { Text, VStack, useToast } from '@chakra-ui/react';
 import { useUserContext } from '../contexts/UserContext';
 import ChatMessage from './ChatMessage';
 
@@ -10,6 +10,7 @@ export default function ChatFeed({ roomName, roomData }) {
   const [roomMessages, setRoomMessages] = useState<ServerMessageType[]>([]);
 
   const { socket } = useSocketContext();
+  const toast = useToast();
 
   const oldMessages: ServerMessageType[] | [] =
     'messages' in roomData ? roomData?.messages : [];
@@ -27,10 +28,15 @@ export default function ChatFeed({ roomName, roomData }) {
     filteredMessages
   });
 
-  const scrollToBottom = () => {
-    if (vStackRef.current) {
-      vStackRef.current.scrollTop = vStackRef.current.scrollHeight;
-    }
+  const showProfaneToast = () => {
+    toast({
+      title: 'Please remove any profanity and try again.',
+      //   description: "We've created your account for you.",
+      status: 'error',
+      duration: 5000,
+      isClosable: true,
+      variant: 'top-accent'
+    });
   };
 
   const filterAndSetMessages = (
@@ -55,9 +61,11 @@ export default function ChatFeed({ roomName, roomData }) {
       });
     };
     socket.on('new message', handleNewMessage);
+    socket.on('invalid Msg', showProfaneToast);
 
     return () => {
       socket.off('new message', handleNewMessage);
+      socket.off('invalid Msg', showProfaneToast);
     };
   }, []);
 

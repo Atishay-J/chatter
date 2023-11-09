@@ -19,7 +19,8 @@ const postMessage = (
   //TODO: Add ids inplace of names
   const isValidMsg = validateMsg(msgObj?.msg || '');
   if (!isValidMsg) {
-    return io.in(roomId).to(userName).emit('invalid Msg');
+    console.log('Found Bad Message');
+    return io.in(roomId).to(userId).emit('invalid Msg');
   }
 
   const socketsInRoom = io.sockets.adapter.rooms.get(roomId);

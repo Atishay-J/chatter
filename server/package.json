@@ -17,6 +17,7 @@
     "express": "^4.18.2",
     "nanoid": "^5.0.3",
     "nodemon": "^3.0.1",
+    "profanity-js": "^0.1.4",
     "socket.io": "^4.7.2"
   },
   "devDependencies": {
