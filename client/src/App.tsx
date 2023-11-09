@@ -2,19 +2,23 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import { useSocketContext } from './components/contexts/SocketContext';
 import CreateRoomPage from './components/CreateRoomPage';
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import RoomPage from './components/RoomPage';
+import JoinRoomPage from './components/JoinRoomPage';
 
 function App() {
   const { socket } = useSocketContext();
 
   useEffect(() => {
     socket.on('new message', (...args) => console.log('New Message', args));
-    socket.on('user joined', (...args) => console.log('user joined', args));
   }, []);
 
   return (
-    <>
-      <CreateRoomPage />
-    </>
+    <Routes>
+      <Route path="/" element={<CreateRoomPage />} />
+      <Route path="/room/:roomName" element={<RoomPage />} />
+      <Route path="/join/room/:roomName" element={<JoinRoomPage />} />
+    </Routes>
   );
 }
 

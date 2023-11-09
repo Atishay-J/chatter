@@ -11,21 +11,40 @@ const postMessage = (
   userName: string,
   roomId: string
 ) => {
+  const currentRoom = server_history[roomId];
+  const currentUser = currentRoom?.participants.find(
+    (user) => user.userId === userId
+  );
+  const blackListedUsers = currentUser?.blockList;
   //TODO: Add ids inplace of names
   const isValidMsg = validateMsg(msgObj?.msg || '');
   if (!isValidMsg) {
     return io.in(roomId).to(userName).emit('invalid Msg');
   }
-  io.in(roomId).emit('new message', { ...msgObj, userName, userId });
-  const room_history = server_history?.[roomId] || {};
-  const updatedRoomHistory = addMsgToRoomHistory(
-    room_history,
-    msgObj,
-    userName,
-    userId
-  );
 
-  return { ...server_history, [roomId]: updatedRoomHistory };
+  const socketsInRoom = io.sockets.adapter.rooms.get(roomId);
+  if (socketsInRoom) {
+    socketsInRoom.forEach((socketId) => {
+      const socket = io.sockets.sockets.get(socketId);
+      if (socket) {
+        // if (!blackListedUsers.includes(socket.userId)) {
+        //   io.to('roomName').to(socketId).emit('message', 'Hello, everyone except some users in the room!');
+        // }
+      }
+    });
+
+    io.in(roomId).emit('new message', { ...msgObj, userName, userId });
+
+    const room_history = server_history?.[roomId] || {};
+    const updatedRoomHistory = addMsgToRoomHistory(
+      room_history,
+      msgObj,
+      userName,
+      userId
+    );
+
+    return { ...server_history, [roomId]: updatedRoomHistory };
+  }
 };
 
 export default postMessage;

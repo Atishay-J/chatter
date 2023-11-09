@@ -2,14 +2,13 @@ import { Button, HStack, Input } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { useSocketContext } from '../contexts/SocketContext';
 import useRoomAndUserInfo from '../hooks/useRoomAndUserInfo';
+import { useUserContext } from '../contexts/UserContext';
 
 export default function ChatInputPanel() {
   const [chat, setChat] = useState('');
   const { socketServer } = useSocketContext();
   const { roomName, userInfo } = useRoomAndUserInfo();
-  const blockUser = () => {
-    socketServer.blockUser(userInfo.userId, 'test', roomName);
-  };
+  const { blockUser } = useUserContext();
 
   const sendMessage = () => {
     if (roomName) {
@@ -31,7 +30,7 @@ export default function ChatInputPanel() {
         onChange={(e) => setChat(e.target.value)}
       />
       <Button onClick={sendMessage}>Send</Button>
-      <Button onClick={blockUser}>Block</Button>
+      <Button onClick={() => blockUser('-Vegdq7yjFvVqiK8C3nDE')}>Block</Button>
     </HStack>
   );
 }

@@ -17,6 +17,7 @@ export const RoomContextProvider = ({ children }: { children: ReactNode }) => {
     Record<string, ServerRoomType> | object
   >({});
   const { socket } = useSocketContext();
+
   useEffect(() => {
     socket.on('room data', (roomData: Record<string, ServerRoomType>) => {
       console.log('should get roomdata', roomData);
