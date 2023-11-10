@@ -1,7 +1,6 @@
-import { HStack, VStack } from '@chakra-ui/react';
+import { HStack } from '@chakra-ui/react';
 import ParticipantsInRoom from '../ParticipantsInRoom';
 import { useRoomContext } from '../contexts/RoomContext';
-import ChatList from '../RoomPagePanels/ChatListPanel';
 import { ChatScreen } from '../Chat';
 import { ServerRoomType } from '../types';
 import RoomSidePanel from './RoomSidePanel';

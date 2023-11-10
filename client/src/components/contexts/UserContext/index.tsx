@@ -9,7 +9,6 @@ import {
 import useRoomAndUserInfo from '../../hooks/useRoomAndUserInfo';
 import { useRoomContext } from '../RoomContext';
 import { ServerRoomType } from '../../types';
-import { useSocketContext } from '../SocketContext';
 
 interface UserContextType {
   blockList: string[] | [];
@@ -19,12 +18,11 @@ interface UserContextType {
 const UserContext = createContext<UserContextType>({} as UserContextType);
 
 export const UserContextProvider = ({ children }: { children: ReactNode }) => {
-  const { userInfo, roomName } = useRoomAndUserInfo();
+  const { userInfo } = useRoomAndUserInfo();
   const serverRoomData = useRoomContext();
   const roomData: ServerRoomType | object =
     Object.values(serverRoomData)[0] || {};
   const [blockList, setBlockList] = useState<string[] | []>([]);
-  const { socketServer } = useSocketContext();
 
   const addUserToLocalBlockList = useCallback((userId: string) => {
     setBlockList((prev) => {
@@ -43,7 +41,7 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
       const currentUser = roomData.participants.find(
         (participant) => participant.userId === userInfo.userId
       );
-      if (currentUser?.name) {
+      if (currentUser?.userName) {
         const currentBlockList = currentUser.blockList ?? [];
 
         setBlockList((prev) => {

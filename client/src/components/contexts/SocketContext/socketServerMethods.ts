@@ -42,7 +42,9 @@ export const createSocketMethods = (socket: Socket): SocketMethods => {
         const response: Record<string, ServerRoomType> =
           await socket.emitWithAck('get room data', roomId);
         return response;
-      } catch (err) {}
+      } catch (err) {
+        console.log('Error while getting room data', err);
+      }
     },
     rejoinRooms: (roomIds: string[]) => {
       socket.emit('rejoin rooms', roomIds);

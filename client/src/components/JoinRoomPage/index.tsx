@@ -1,4 +1,4 @@
-import { Button, Center, Input, VStack } from '@chakra-ui/react';
+import { Button, Center, Input, Text, VStack } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { useSocketContext } from '../contexts/SocketContext';
 import { useNavigate } from 'react-router-dom';
@@ -6,7 +6,7 @@ import useRoomAndUserInfo from '../hooks/useRoomAndUserInfo';
 
 export default function JoinRoomPage() {
   const [userName, setUserName] = useState('');
-  const { socket, socketServer } = useSocketContext();
+  const { socketServer } = useSocketContext();
   const navigate = useNavigate();
   const { roomName } = useRoomAndUserInfo();
 
@@ -36,9 +36,12 @@ export default function JoinRoomPage() {
         spacing="3rem"
         maxW="500px"
         boxShadow="0px 0px 8px 0px rgba(200,200,200,0.5)"
-        p="10rem 8rem"
+        p="5rem 5rem 8rem 5rem"
         borderRadius="18px"
       >
+        <Text fontSize="1.3rem" fontWeight="600" justifySelf="flex-start">
+          Join Room
+        </Text>
         <VStack w="100%" spacing="1rem">
           <Input
             type="text"

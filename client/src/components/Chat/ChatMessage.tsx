@@ -35,7 +35,7 @@ export default function ChatMessage({
             {formatRelative(new Date(message.timeStamp), new Date())}
           </Text>
         </HStack>
-        <Text w="100%" fontSize="1rem" p="0">
+        <Text w="100%" fontSize="1rem" p="0" whiteSpace="pre-line">
           {message.msg}
         </Text>
       </VStack>

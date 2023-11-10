@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 export default function CreateRoomPage() {
   const [userName, setUserName] = useState('');
   const [roomName, setRoomName] = useState('');
-  const { socket, socketServer } = useSocketContext();
+  const { socketServer } = useSocketContext();
   const navigate = useNavigate();
 
   const joinRoom = async () => {

@@ -7,12 +7,7 @@ import {
 } from 'react';
 import { useSocketContext } from '../SocketContext';
 import { ServerRoomType } from '../../types';
-import {
-  matchPath,
-  useLocation,
-  useNavigate,
-  useParams
-} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import useRoomAndUserInfo from '../../hooks/useRoomAndUserInfo';
 
 const RoomContext = createContext(
@@ -27,7 +22,6 @@ export const RoomContextProvider = ({ children }: { children: ReactNode }) => {
   const { userInfo } = useRoomAndUserInfo();
   const roomId = userInfo?.roomId || '';
   const navigate = useNavigate();
-  const { pathname } = useLocation();
 
   const getAndSetRoomData = async () => {
     const roomDataResponse = await socketServer.getRoomData(roomId || '');

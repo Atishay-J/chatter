@@ -4,8 +4,7 @@ import {
   Popover,
   PopoverTrigger,
   Text,
-  VStack,
-  useDisclosure
+  VStack
 } from '@chakra-ui/react';
 import React from 'react';
 import { getInitials } from '../utils/getInitials';
@@ -25,28 +24,15 @@ export default function ParticipantsStatusCard({
   role
 }: ParticipantsStatusCardType) {
   const userInitials = getInitials(name);
-  const { isOpen, onToggle, onClose } = useDisclosure();
   const dotColor = {
     online: 'green',
     offline: 'gray'
   };
   return (
     <>
-      <Popover
-        returnFocusOnClose={false}
-        // isOpen={isOpen}
-        // onClose={onClose}
-        placement="right"
-        closeOnBlur={true}
-      >
+      <Popover returnFocusOnClose={false} placement="right" closeOnBlur={true}>
         <PopoverTrigger>
-          <HStack
-            w="100%"
-            align="center"
-            spacing="1rem"
-            // onClick={onToggle}
-            cursor="pointer"
-          >
+          <HStack w="100%" align="center" spacing="1rem" cursor="pointer">
             <Box pos="relative">
               <Box
                 w="2.1rem"
@@ -56,7 +42,6 @@ export default function ParticipantsStatusCard({
                 textAlign="center"
                 lineHeight="2.1rem"
                 color="white"
-                // alignSelf="flex-start"
               >
                 <Text>{userInitials}</Text>
               </Box>
@@ -73,14 +58,25 @@ export default function ParticipantsStatusCard({
               ></Box>
             </Box>
             <VStack spacing="0">
-              <Text w="100%" fontSize="1rem" fontWeight="500" color="blue.300">
+              <Text
+                w="100%"
+                fontSize="1rem"
+                textAlign="left"
+                fontWeight="500"
+                color="blue.300"
+              >
                 {name}
               </Text>
-              <HStack>
-                <Text fontSize="0.8rem" fontWeight="400" color="gray.500">
-                  {status}
-                </Text>
-              </HStack>
+
+              <Text
+                w="100%"
+                fontSize="0.8rem"
+                fontWeight="400"
+                color="gray.500"
+                textAlign="left"
+              >
+                {status}
+              </Text>
             </VStack>
           </HStack>
         </PopoverTrigger>

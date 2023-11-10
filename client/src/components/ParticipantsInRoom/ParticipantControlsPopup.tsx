@@ -82,12 +82,24 @@ export default function ParticipantControlsPopup({
             ></Box>
           </Box>
           <VStack spacing="0">
-            <Text w="100%" fontSize="1rem" fontWeight="500" color="blue.300">
+            <Text
+              w="100%"
+              textAlign="left"
+              fontSize="1rem"
+              fontWeight="500"
+              color="blue.300"
+            >
               {name} {currentUserId === userId ? '- (You)' : ''}
             </Text>
 
-            <HStack>
-              <Text fontSize="0.8rem" fontWeight="400" color="gray.500">
+            <HStack w="100%">
+              <Text
+                w="100%"
+                textAlign="left"
+                fontSize="0.8rem"
+                fontWeight="400"
+                color="gray.500"
+              >
                 {status}
               </Text>
               <Text

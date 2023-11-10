@@ -1,12 +1,11 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useRoomContext } from '../contexts/RoomContext';
-import { ServerMessageType } from '../types';
+import React, { useEffect, useRef, useState } from 'react';
+import { ServerMessageType, ServerRoomType } from '../types';
 import { useSocketContext } from '../contexts/SocketContext';
-import { Text, VStack, useToast } from '@chakra-ui/react';
+import { VStack, useToast } from '@chakra-ui/react';
 import { useUserContext } from '../contexts/UserContext';
 import ChatMessage from './ChatMessage';
 
-export default function ChatFeed({ roomName, roomData }) {
+export default function ChatFeed({ roomData }: { roomData: ServerRoomType }) {
   const [roomMessages, setRoomMessages] = useState<ServerMessageType[]>([]);
 
   const { socket } = useSocketContext();
@@ -67,6 +66,8 @@ export default function ChatFeed({ roomName, roomData }) {
   useEffect(() => {
     vStackRef.current?.lastElementChild?.scrollIntoView();
   }, [filteredMessages]);
+
+  console.log({ filteredMessages });
 
   return (
     <VStack
