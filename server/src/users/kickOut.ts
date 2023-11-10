@@ -31,7 +31,6 @@ export const kickOutUser = (
   const currentSocket = io.sockets.sockets.get(currentSocketId || '');
 
   if (currentSocketId) {
-    console.log('Going to remove ', currentSocket?.id);
     io.to(currentSocketId).emit('kicked you out');
     currentSocket?.leave(roomId);
     // io.in(currentSocketId).socketsLeave(roomId);

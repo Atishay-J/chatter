@@ -28,11 +28,9 @@ app.get('/', (req, res) => {
 let server_history = {};
 
 io.on('connection', (socket) => {
-  console.log('a user connected');
   socket.on(
     'join room',
     (userName: string, roomName: string, role: UserRole, callback) => {
-      console.log('user joining room');
       const { updatedHistory, userId, roomId } = joinRoom(
         server_history,
         socket,

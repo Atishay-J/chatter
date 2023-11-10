@@ -1,4 +1,4 @@
-import { Button, Center, Input, VStack } from '@chakra-ui/react';
+import { Button, Center, Input, Text, VStack } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { useSocketContext } from '../contexts/SocketContext';
 import { useNavigate } from 'react-router-dom';
@@ -11,18 +11,11 @@ export default function CreateRoomPage() {
 
   const joinRoom = async () => {
     const joinRoomResponse = await socketServer.joinRoom(userName, roomName);
-    console.log(
-      'should join room',
-      socket,
-      userName,
-      roomName,
-      joinRoomResponse
-    );
+
     if (joinRoomResponse) {
       const { roomId, userId } = joinRoomResponse;
       const userInfo = { userName, userId, roomId, role: 'Admin' };
       const stringifiedUserInfo = JSON.stringify(userInfo);
-      console.log({ stringifiedUserInfo });
       sessionStorage.setItem('userInfo', stringifiedUserInfo);
 
       navigate(`/room/${roomId}`, {
@@ -38,9 +31,12 @@ export default function CreateRoomPage() {
         spacing="3rem"
         maxW="500px"
         boxShadow="0px 0px 8px 0px rgba(200,200,200,0.5)"
-        p="10rem 8rem"
+        p="5rem 5rem 8rem 5rem"
         borderRadius="18px"
       >
+        <Text fontSize="1.3rem" fontWeight="600" justifySelf="flex-start">
+          Create Room
+        </Text>
         <VStack w="100%" spacing="1rem">
           <Input
             type="text"

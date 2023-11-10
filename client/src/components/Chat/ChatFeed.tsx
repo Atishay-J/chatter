@@ -21,13 +21,6 @@ export default function ChatFeed({ roomName, roomData }) {
   );
   const vStackRef = useRef<HTMLDivElement>(null);
 
-  console.log('ROom data here', {
-    roomData,
-    blockList,
-    roomMessages,
-    filteredMessages
-  });
-
   const showProfaneToast = () => {
     toast({
       title: 'Please remove any profanity and try again.',
@@ -45,7 +38,6 @@ export default function ChatFeed({ roomName, roomData }) {
     const filterBlockedUsersMsg = messages.filter((msg) =>
       (blockList as string[]).includes(msg.userId) ? false : true
     );
-    console.log('Filtering messages', filterBlockedUsersMsg, blockList);
     callback(filterBlockedUsersMsg);
   };
 
@@ -55,7 +47,6 @@ export default function ChatFeed({ roomName, roomData }) {
 
   useEffect(() => {
     const handleNewMessage = (...args: ServerMessageType[]) => {
-      console.log('New message recieved', args);
       setRoomMessages((prev) => {
         return [...prev, ...args];
       });
@@ -77,7 +68,6 @@ export default function ChatFeed({ roomName, roomData }) {
     vStackRef.current?.lastElementChild?.scrollIntoView();
   }, [filteredMessages]);
 
-  console.log({ roomData, roomMessages });
   return (
     <VStack
       ref={vStackRef}

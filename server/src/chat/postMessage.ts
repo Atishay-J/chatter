@@ -16,23 +16,10 @@ const postMessage = (
     (user) => user.userId === userId
   );
   const blackListedUsers = currentUser?.blockList;
-  //TODO: Add ids inplace of names
   const isValidMsg = validateMsg(msgObj?.msg || '');
   if (!isValidMsg) {
-    console.log('Found Bad Message');
     return io.in(roomId).to(userId).emit('invalid Msg');
   }
-
-  // const socketsInRoom = io.sockets.adapter.rooms.get(roomId);
-  // if (socketsInRoom) {
-  //   socketsInRoom.forEach((socketId) => {
-  //     const socket = io.sockets.sockets.get(socketId);
-  //     if (socket) {
-  //       // if (!blackListedUsers.includes(socket.userId)) {
-  //       //   io.to('roomName').to(socketId).emit('message', 'Hello, everyone except some users in the room!');
-  //       // }
-  //     }
-  //   });
 
   io.in(roomId).emit('new message', { ...msgObj, userName, userId });
 

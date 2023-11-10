@@ -11,7 +11,6 @@ export default function JoinRoomPage() {
   const { roomName } = useRoomAndUserInfo();
 
   const joinRoom = async () => {
-    console.log('should join room', socket);
     if (roomName) {
       const joinRoomResponse = await socketServer.joinRoom(
         userName,
@@ -22,7 +21,6 @@ export default function JoinRoomPage() {
         const { roomId, userId } = joinRoomResponse;
         const userInfo = { userName, userId, roomId, role: 'User' };
         const stringifiedUserInfo = JSON.stringify(userInfo);
-        console.log({ stringifiedUserInfo });
         sessionStorage.setItem('userInfo', stringifiedUserInfo);
 
         navigate(`/room/${roomId}`, {

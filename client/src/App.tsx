@@ -1,6 +1,4 @@
-import { useEffect, useState } from 'react';
 import './App.css';
-import { useSocketContext } from './components/contexts/SocketContext';
 import CreateRoomPage from './components/CreateRoomPage';
 import { Route, Routes } from 'react-router-dom';
 import RoomPage from './components/RoomPage';
@@ -8,12 +6,6 @@ import JoinRoomPage from './components/JoinRoomPage';
 import KickedOutPage from './components/KickedOutPage';
 
 function App() {
-  const { socket, socketServer } = useSocketContext();
-
-  useEffect(() => {
-    socket.on('new message', (...args) => console.log('New Message', args));
-  }, []);
-
   return (
     <Routes>
       <Route path="/" element={<CreateRoomPage />} />

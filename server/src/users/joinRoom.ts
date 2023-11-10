@@ -28,7 +28,6 @@ const joinRoom = (
     server_history,
     socket
   );
-  console.log('user in room', roomData, userId, roomId);
   socket.join(roomId);
   const updatedHistory = { ...server_history, ...roomData };
   socket.emit('user joined', updatedHistory);

@@ -10,22 +10,23 @@ export const logout = (
 ) => {
   const currentRoom = server_history?.[roomId];
   const participants = currentRoom?.participants;
-  const { currentParticipant, otherParticipants } = participants?.reduce(
-    (
-      acc: { currentParticipant?: UserData; otherParticipants?: UserData[] },
-      cur
-    ) => {
-      if (cur.userId === userId) {
-        return { currentParticipant: cur, ...acc };
-      } else {
-        return {
-          ...acc,
-          otherParticipants: [...(acc?.otherParticipants || []), cur]
-        };
-      }
-    },
-    {}
-  );
+  const { currentParticipant, otherParticipants } =
+    participants?.reduce(
+      (
+        acc: { currentParticipant?: UserData; otherParticipants?: UserData[] },
+        cur
+      ) => {
+        if (cur.userId === userId) {
+          return { currentParticipant: cur, ...acc };
+        } else {
+          return {
+            ...acc,
+            otherParticipants: [...(acc?.otherParticipants || []), cur]
+          };
+        }
+      },
+      {}
+    ) || {};
 
   const updatedCurrentParticipant = {
     ...currentParticipant,

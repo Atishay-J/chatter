@@ -29,6 +29,5 @@ export const blockUser = (
     ...room_history,
     participants: updatedParticipantList
   };
-  console.log('Should Block user', { ...server_history, updatedRoomData });
   return { ...server_history, [roomId]: updatedRoomData };
 };

@@ -8,7 +8,6 @@ export default function ParticipantsInRoom({
   roomData: ServerRoomType;
 }) {
   const participants = roomData.participants;
-  console.log('Participant', participants);
   return (
     <VStack
       w="23%"

@@ -16,7 +16,6 @@ export const createSocketMethods = (socket: Socket): SocketMethods => {
             roomName,
             role || 'Admin'
           );
-        console.log({ response });
         const data = response.data;
         return data;
       } catch (err) {
@@ -42,11 +41,8 @@ export const createSocketMethods = (socket: Socket): SocketMethods => {
       try {
         const response: Record<string, ServerRoomType> =
           await socket.emitWithAck('get room data', roomId);
-        console.log({ roomDataResponse: response });
         return response;
-      } catch (err) {
-        console.log('Error getting room data');
-      }
+      } catch (err) {}
     },
     rejoinRooms: (roomIds: string[]) => {
       socket.emit('rejoin rooms', roomIds);

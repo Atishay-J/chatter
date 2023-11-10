@@ -38,18 +38,14 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
     addUserToLocalBlockList(blockedUserId);
   };
 
-  console.log('blocklist updated', blockList);
-
   useEffect(() => {
     if ('participants' in roomData) {
       const currentUser = roomData.participants.find(
         (participant) => participant.userId === userInfo.userId
       );
-      console.log('current User here', currentUser);
       if (currentUser?.name) {
         const currentBlockList = currentUser.blockList ?? [];
 
-        console.log('current blockList here', currentUser);
         setBlockList((prev) => {
           return [...prev, ...currentBlockList];
         });

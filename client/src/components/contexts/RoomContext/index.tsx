@@ -31,7 +31,6 @@ export const RoomContextProvider = ({ children }: { children: ReactNode }) => {
 
   const getAndSetRoomData = async () => {
     const roomDataResponse = await socketServer.getRoomData(roomId || '');
-    console.log('Getting and setting', roomDataResponse, roomId);
     setRoomData(roomDataResponse || {});
   };
 
@@ -39,21 +38,17 @@ export const RoomContextProvider = ({ children }: { children: ReactNode }) => {
     navigate('/kickout');
   };
 
-  console.log('====>>', roomId, roomData);
   useEffect(() => {
     socket.on('room data', (roomData: Record<string, ServerRoomType>) => {
-      console.log('should get roomdata', roomData);
       setRoomData(roomData);
     });
 
     socket.on('room updated', (data) => {
-      console.log('THis isthe stufff', data);
       setRoomData(data);
     });
     socket.on('kicked you out', navigateToKickedOutpage);
 
     if (roomId) {
-      console.log('Is rejoining old room');
       socketServer.rejoinRooms([roomId]);
       getAndSetRoomData();
     }
