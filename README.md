@@ -30,3 +30,13 @@ npm run dev
 npm run dev
 
 ```
+
+# Features
+
+- Join Rooms
+- Create Rooms
+- Default roles Admin & User
+  - User can mute other users
+  - Admin can mute and kick out users from roomm
+- Status for users, Offline and Online
+- Profanity file on messages
