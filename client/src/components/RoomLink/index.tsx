@@ -6,9 +6,8 @@ import {
   VStack,
   useToast
 } from '@chakra-ui/react';
-import { LinkIcon } from '@chakra-ui/icon';
 import React from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { LuCopy } from 'react-icons/lu';
 
 export default function JoinRooomLink() {

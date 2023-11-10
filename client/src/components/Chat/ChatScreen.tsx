@@ -24,7 +24,7 @@ export default function ChatScreen({ roomData, roomName }: ChatScreenType) {
         Room - {roomName}
       </Text>
       <VStack w="100%" h="94%" background="#f1f3fa" p="1rem">
-        <ChatFeed roomData={roomData} roomName={roomName} />
+        <ChatFeed roomData={roomData} />
         <ChatInputPanel />
       </VStack>
     </VStack>
