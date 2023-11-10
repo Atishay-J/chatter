@@ -50,6 +50,9 @@ export const createSocketMethods = (socket: Socket): SocketMethods => {
     },
     rejoinRooms: (roomIds: string[]) => {
       socket.emit('rejoin rooms', roomIds);
+    },
+    kickOutUser: (userId: string, roomId: string) => {
+      socket.emit('kick out', userId, roomId);
     }
   };
 };

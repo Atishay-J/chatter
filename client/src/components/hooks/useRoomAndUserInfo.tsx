@@ -7,7 +7,7 @@ export default function useRoomAndUserInfo() {
   const [userInfo, setUserInfo] = useState<Record<string, string>>({});
 
   useEffect(() => {
-    const data = localStorage.getItem('userInfo') || '';
+    const data = sessionStorage.getItem('userInfo') || '';
     try {
       if (data) {
         const jsonUserInfo = JSON.parse(data);

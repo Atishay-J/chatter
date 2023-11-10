@@ -13,6 +13,8 @@ import {
 } from '@chakra-ui/react';
 import React from 'react';
 import { useUserContext } from '../contexts/UserContext';
+import useRoomAndUserInfo from '../hooks/useRoomAndUserInfo';
+import { useSocketContext } from '../contexts/SocketContext';
 
 interface ParticipantControlsPopupType {
   name: string;
@@ -30,9 +32,18 @@ export default function ParticipantControlsPopup({
   userInitials
 }: ParticipantControlsPopupType) {
   const { blockUser } = useUserContext();
+  const { userInfo } = useRoomAndUserInfo();
+  const { socketServer } = useSocketContext();
+  const currentUserRole = userInfo.role;
+  const currentUserId = userInfo.userId;
+  const currentRoomId = userInfo.roomId;
 
   const muteUser = () => {
     blockUser(userId);
+  };
+
+  const kickOutUser = () => {
+    socketServer.kickOutUser(userId, currentRoomId);
   };
 
   const dotColor = {
@@ -72,7 +83,7 @@ export default function ParticipantControlsPopup({
           </Box>
           <VStack spacing="0">
             <Text w="100%" fontSize="1rem" fontWeight="500" color="blue.300">
-              {name}
+              {name} {currentUserId === userId ? '- (You)' : ''}
             </Text>
 
             <HStack>
@@ -91,13 +102,20 @@ export default function ParticipantControlsPopup({
           </VStack>
         </HStack>
       </PopoverBody>
-      <PopoverFooter display="flex" justifyContent="flex-end">
-        <ButtonGroup size="sm">
-          <Button colorScheme="red" onClick={muteUser}>
-            Mute
-          </Button>
-        </ButtonGroup>
-      </PopoverFooter>
+      {currentUserId !== userId && (
+        <PopoverFooter display="flex" justifyContent="flex-end">
+          <ButtonGroup size="sm">
+            <Button colorScheme="red" onClick={muteUser}>
+              Mute
+            </Button>
+            {currentUserRole === 'Admin' && (
+              <Button colorScheme="red" onClick={kickOutUser}>
+                Kick out
+              </Button>
+            )}
+          </ButtonGroup>
+        </PopoverFooter>
+      )}
     </PopoverContent>
   );
 }

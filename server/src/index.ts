@@ -9,6 +9,7 @@ import {
   ServerHistory,
   UserRole
 } from './utils/global.types';
+import { kickOutUser } from './users/kickOut';
 
 const app = express();
 app.use(cors());
@@ -90,6 +91,9 @@ io.on('connection', (socket) => {
       server_history = blockUser(userId, blockedUserId, roomId, server_history);
     }
   );
+  socket.on('kick out', (userId: string, roomId: string) => {
+    server_history = kickOutUser(userId, roomId, server_history, socket, io);
+  });
 });
 
 server.listen(PORT, () => {

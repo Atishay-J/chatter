@@ -12,6 +12,7 @@ export interface UserData {
   userId: string;
   role: UserRole;
   blockList?: string[];
+  socketId: string;
 }
 
 export interface RoomData {

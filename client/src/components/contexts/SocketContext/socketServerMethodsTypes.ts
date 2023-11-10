@@ -21,4 +21,5 @@ export type SocketMethods = {
     roomId: string
   ) => Promise<Record<string, ServerRoomType> | undefined>;
   rejoinRooms: (roomsIds: string[]) => void;
+  kickOutUser: (userId: string, roomId: string) => void;
 };

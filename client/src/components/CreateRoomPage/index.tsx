@@ -10,14 +10,20 @@ export default function CreateRoomPage() {
   const navigate = useNavigate();
 
   const joinRoom = async () => {
-    console.log('should join room', socket);
     const joinRoomResponse = await socketServer.joinRoom(userName, roomName);
+    console.log(
+      'should join room',
+      socket,
+      userName,
+      roomName,
+      joinRoomResponse
+    );
     if (joinRoomResponse) {
       const { roomId, userId } = joinRoomResponse;
-      const userInfo = { userName, userId, roomId };
+      const userInfo = { userName, userId, roomId, role: 'Admin' };
       const stringifiedUserInfo = JSON.stringify(userInfo);
       console.log({ stringifiedUserInfo });
-      localStorage.setItem('userInfo', stringifiedUserInfo);
+      sessionStorage.setItem('userInfo', stringifiedUserInfo);
 
       navigate(`/room/${roomId}`, {
         state: { userInfo: { userName, userId } }

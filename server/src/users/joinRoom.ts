@@ -25,7 +25,8 @@ const joinRoom = (
     roomName,
     userName,
     role,
-    server_history
+    server_history,
+    socket
   );
   console.log('user in room', roomData, userId, roomId);
   socket.join(roomId);
