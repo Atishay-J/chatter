@@ -36,7 +36,7 @@ export const RoomContextProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const navigateToKickedOutpage = () => {
-    navigate('/alibaba');
+    navigate('/kickout');
   };
 
   console.log('====>>', roomId, roomData);
