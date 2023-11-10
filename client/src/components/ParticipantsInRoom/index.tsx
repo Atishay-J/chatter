@@ -1,4 +1,4 @@
-import { VStack } from '@chakra-ui/react';
+import { Divider, Text, VStack } from '@chakra-ui/react';
 import ParticipantsStatusCard from './ParticipantsStatusCard';
 import { ServerRoomType } from '../types';
 
@@ -19,15 +19,17 @@ export default function ParticipantsInRoom({
       p="1rem"
       pl="1.5rem"
     >
-      {participants?.map((participant) => (
-        <ParticipantsStatusCard
-          key={participant.userId}
-          name={participant.userName}
-          userId={participant.userId}
-          status={'online'}
-          role={participant.role}
-        />
-      ))}
+      <VStack w="100%">
+        {participants?.map((participant) => (
+          <ParticipantsStatusCard
+            key={participant.userId}
+            name={participant.userName}
+            userId={participant.userId}
+            status={participant.status}
+            role={participant.role}
+          />
+        ))}
+      </VStack>
     </VStack>
   );
 }

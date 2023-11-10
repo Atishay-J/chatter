@@ -8,7 +8,7 @@ const createUser = (
   socket: Socket
 ): UserData => {
   const userId = nanoid();
-  return { userName, role, userId, socketId: socket.id };
+  return { userName, role, userId, socketId: socket.id, status: 'online' };
 };
 
 export default createUser;

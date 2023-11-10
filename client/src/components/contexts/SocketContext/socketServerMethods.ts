@@ -53,6 +53,9 @@ export const createSocketMethods = (socket: Socket): SocketMethods => {
     },
     kickOutUser: (userId: string, roomId: string) => {
       socket.emit('kick out', userId, roomId);
+    },
+    logout: (roomId: string, userId: string) => {
+      socket.emit('logout', roomId, userId);
     }
   };
 };

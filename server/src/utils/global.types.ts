@@ -13,6 +13,7 @@ export interface UserData {
   role: UserRole;
   blockList?: string[];
   socketId: string;
+  status?: string;
 }
 
 export interface RoomData {

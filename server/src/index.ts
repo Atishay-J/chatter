@@ -10,6 +10,7 @@ import {
   UserRole
 } from './utils/global.types';
 import { kickOutUser } from './users/kickOut';
+import { logout } from './users/logout';
 
 const app = express();
 app.use(cors());
@@ -76,6 +77,9 @@ io.on('connection', (socket) => {
     roomIds.forEach((roomId) => {
       socket.join(roomId); // Rejoin the rooms
     });
+  });
+  socket.on('logout', (roomId: string, userId: string) => {
+    server_history = logout(userId, roomId, socket, io, server_history);
   });
   socket.on('get room data', (roomId: string, callback) => {
     const roomData = (server_history as ServerHistory)?.[roomId] || {};

@@ -10,6 +10,7 @@ export interface ServerRoomParticipantType {
   role: string;
   userId: string;
   blockList?: string[];
+  status?: 'online' | 'offline';
 }
 
 export interface ServerRoomType {

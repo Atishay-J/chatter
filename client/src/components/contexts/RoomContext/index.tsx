@@ -46,7 +46,10 @@ export const RoomContextProvider = ({ children }: { children: ReactNode }) => {
       setRoomData(roomData);
     });
 
-    socket.on('room updated', (data) => setRoomData(data));
+    socket.on('room updated', (data) => {
+      console.log('THis isthe stufff', data);
+      setRoomData(data);
+    });
     socket.on('kicked you out', navigateToKickedOutpage);
 
     if (roomId) {

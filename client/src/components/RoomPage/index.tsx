@@ -1,9 +1,10 @@
 import { HStack, VStack } from '@chakra-ui/react';
 import ParticipantsInRoom from '../ParticipantsInRoom';
 import { useRoomContext } from '../contexts/RoomContext';
-import ChatList from '../ChatList';
+import ChatList from '../RoomPagePanels/ChatListPanel';
 import { ChatScreen } from '../Chat';
 import { ServerRoomType } from '../types';
+import RoomSidePanel from './RoomSidePanel';
 
 export default function RoomPage() {
   const serverRoomData: Record<string, ServerRoomType> | object =
@@ -18,7 +19,7 @@ export default function RoomPage() {
       p="0.5rem 0.2rem"
       justify="space-between"
     >
-      <ChatList roomName={roomData?.roomName} />
+      <RoomSidePanel roomName={roomData?.roomName} />
       <ChatScreen roomData={roomData} roomName={roomData?.roomName} />
       <ParticipantsInRoom roomData={roomData} />
     </HStack>
