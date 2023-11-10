@@ -10,42 +10,45 @@ export const logout = (
 ) => {
   const currentRoom = server_history?.[roomId];
   const participants = currentRoom?.participants;
-  const { currentParticipant, otherParticipants } =
-    participants?.reduce(
-      (
-        acc: { currentParticipant?: UserData; otherParticipants?: UserData[] },
-        cur
-      ) => {
+  if (participants) {
+    //@ts-ignore
+    const { currentParticipant, otherParticipants } = participants.reduce(
+      (acc, cur) => {
         if (cur.userId === userId) {
           return { currentParticipant: cur, ...acc };
         } else {
           return {
             ...acc,
+            //@ts-ignore
             otherParticipants: [...(acc?.otherParticipants || []), cur]
           };
         }
       },
       {}
-    ) || {};
+    );
 
-  const updatedCurrentParticipant = {
-    ...currentParticipant,
-    status: 'offline'
-  };
+    const updatedCurrentParticipant = {
+      ...currentParticipant,
+      status: 'offline'
+    };
 
-  socket.leave(roomId);
-  const updatedRoom = {
-    [roomId]: {
-      ...currentRoom,
-      //@ts-ignore
-      participants: [...otherParticipants, updatedCurrentParticipant]
-    }
-  };
+    const updatedRoom = {
+      [roomId]: {
+        ...currentRoom,
+        participants: [
+          ...(otherParticipants?.length > 0 ? otherParticipants : []),
+          updatedCurrentParticipant
+        ]
+      }
+    };
 
-  io.to(roomId).emit('room updated', updatedRoom);
-
-  return {
-    ...server_history,
-    ...updatedRoom
-  };
+    io.to(roomId).emit('room updated', updatedRoom);
+    socket.leave(roomId);
+    return {
+      ...server_history,
+      ...updatedRoom
+    };
+  } else {
+    console.error('No participants in room');
+  }
 };

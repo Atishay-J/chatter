@@ -10,7 +10,7 @@ export const kickOutUser = (
 ) => {
   const currentRoom = server_history?.[roomId];
   const { currentParticipant, otherParticipants } =
-    currentRoom.participants.reduce(
+    currentRoom?.participants?.reduce(
       (
         acc: { currentParticipant?: UserData; otherParticipants?: UserData[] },
         cur
@@ -25,7 +25,7 @@ export const kickOutUser = (
         }
       },
       {}
-    );
+    ) || {};
 
   const currentSocketId = currentParticipant?.socketId;
   const currentSocket = io.sockets.sockets.get(currentSocketId || '');
